@@ -43,26 +43,26 @@ def odbicia():
             [0, -1, 0],
             [0, 0, 1]
         ], dtype = float)
-    elif os.lower == "x":
+    elif os == "x":
         return np.array([
             [1, 0, 0],
             [0, -1, 0],
             [0, 0, 1]
         ], dtype = float)
-    elif os.lower == "y":
+    elif os == "y":
         return np.array([
             [-1, 0, 0],
             [0, 1, 0],
             [0, 0, 1]
         ], dtype = float)
-    elif os.lower == "x1":
+    elif os == "x1":
         prosta = input("podaj współrzędną x")
         return np.array([
             [-1, 0, prosta],
             [0, 1, 0],
             [0, 0, 1]
         ], dtype = float)
-    elif os.lower == "y1":
+    elif os == "y1":
         prosta = input("podaj współrzędną y")
         return np.array([
             [-1, 0, 0],
@@ -344,10 +344,44 @@ if rownanie == 1 and niew == 1:
     elif len(nowe_rownanie) == 3:
         if new_niew_index == 0:
             if nowe_rownanie[0].operator == "*" and nowe_rownanie[0].kolumny == nowe_rownanie[2].kolumny and nowe_rownanie[1].wiersze == nowe_rownanie[2].wiersze:
-                nowa_macierz.macierz = np.linalg.solve(nowe_rownanie[1].macierz, nowe_rownanie[2].macierz)
+                nowa_macierz_mno = []
+                now = list()
+                for i in range(nowe_rownanie[1].wiersze):
+                    nowa_macierz_mno.append([])
+                    for j in range(nowe_rownanie[0].kolumny):
+                        now.append([])
+                        now[j].append(float(nowe_rownanie[1].macierz[i][j]))
+                        nowa_macierz_mno[i].append(now[j])
+                nieznana = np.zeros((nowe_rownanie[0].wiersze, nowe_rownanie[0].kolumny))
+                for i in range(nowe_rownanie[0].wiersze):
+                    nieznana[i] = np.linalg.solve(nowa_macierz_mno[i], nowe_rownanie[2].macierz[i])
+                print(nieznana)
+            elif nowe_rownanie[0].operator == "+":
+                nowa_macierz.macierz = odejmowanie(nowe_rownanie[2].macierz, nowe_rownanie[1].macierz)
                 for row in nowa_macierz.macierz:
                     print(row)
                     exit()
+            elif nowe_rownanie[0].operator == "-":
+                nowa_macierz.macierz = (nowe_rownanie[2].macierz, nowe_rownanie[1].macierz)
+                for row in nowa_macierz.macierz:
+                    print(row)
+                    exit()
+            else:
+                print("Podano zle wymiary macierzy")
+        elif new_niew_index == 1:
+            if nowe_rownanie[0].operator == "*" and nowe_rownanie[0].kolumny == nowe_rownanie[2].kolumny and nowe_rownanie[1].wiersze == nowe_rownanie[2].wiersze:
+                nowa_macierz_mno = []
+                now = list()
+                for i in range(nowe_rownanie[0].wiersze):
+                    nowa_macierz_mno.append([])
+                    for j in range(nowe_rownanie[2].kolumny):
+                        now.append([])
+                        now[j].append(float(nowe_rownanie[2].macierz[i][j]))
+                        nowa_macierz_mno[i].append(now[j])
+                nieznana = np.zeros((nowe_rownanie[1].kolumny, nowe_rownanie[1].kolumny))
+                for i in range(nowe_rownanie[1].kolumny):
+                    nieznana[i] = np.linalg.solve(nowe_rownanie[0].macierz, nowe_rownanie[2].macierz[:, i])
+                print(nieznana)
             elif nowe_rownanie[0].operator == "+":
                 nowa_macierz.macierz = odejmowanie(nowe_rownanie[2].macierz, nowe_rownanie[1].macierz)
                 for row in nowa_macierz.macierz:
@@ -361,21 +395,33 @@ if rownanie == 1 and niew == 1:
             else:
                 print("Podano zle wymiary macierzy")
     else:
-        for i in range(len(nowe_rownanie)):
-            print(nowe_rownanie[i])
-        print(new_niew_index)
-        macierz1_wektory = np.reshape(nowe_rownanie[0].macierz, (nowe_rownanie[0].wiersze, -1))
-        A = np.kron(macierz1_wektory.T, nowe_rownanie[2].macierz.T)  # Kronecker product
-        B = np.reshape(nowe_rownanie[3].macierz, (-1,))
-        X_vektory = np.linalg.solve(A, B)
-        nowe_rownanie[1].macierz = np.reshape(X_vektory, (nowe_rownanie[0].kolumny, nowe_rownanie[3].wiersze))
-        for wiersz in range(nowe_rownanie[1].wiersze):
-            for kolumna in range(nowe_rownanie[1].kolumny):
-                nowe_rownanie[1].macierz[wiersz][kolumna] = round(float(nowe_rownanie[1].macierz[wiersz][kolumna]), 2)
-        for row in nowe_rownanie[1].macierz:
-            print(row)
+        if nowe_rownanie[0].operator == "*" and nowe_rownanie[0].kolumny == nowe_rownanie[2].kolumny and nowe_rownanie[
+            1].wiersze == nowe_rownanie[2].wiersze:
+            nowa_macierz_mno = []
+            now = list()
+            for i in range(nowe_rownanie[0].wiersze):
+                nowa_macierz_mno.append([])
+                for j in range(nowe_rownanie[2].kolumny):
+                    now.append([])
+                    now[j].append(float(nowe_rownanie[2].macierz[i][j]))
+                    nowa_macierz_mno[i].append(now[j])
+            if nowe_rownanie[1].operator == "*" and nowe_rownanie[1].kolumny == nowe_rownanie[2].kolumny and nowe_rownanie[2].wiersze == nowe_rownanie[3].wiersze:
+                for sub_tab in nowa_macierz_mno:
+                    temp_result = []
+                    for row in sub_tab:
+                        result_row = np.dot(row, nowe_rownanie[2].macierz)
+                        temp_result.append(result_row.tolist())
+                    nowa_macierz_mno = np.array(temp_result, dtype = float)
+                nieznana = np.zeros((nowe_rownanie[1].kolumny, nowe_rownanie[1].kolumny))
+                for i in range(nowe_rownanie[1].kolumny):
+                    nieznana[i] = np.linalg.solve(nowe_rownanie[0].macierz, nowe_rownanie[2].macierz[:, i])
+                print(nieznana)
+            else:
+                print("Podano zle wymiary macierzy")
+        else:
+            print("Podano zle wymiary macierzy")
 else:
-    nowa_macierz.macierz = lista_macierzy[0]
+    nowa_macierz.macierz = lista_macierzy[0].macierz
     for i in range(len(lista_macierzy)-1):
         nowa_macierz.macierz = operacje(nowa_macierz.macierz, lista_macierzy, i)
     for wiersz in range(len(nowa_macierz.macierz)):
