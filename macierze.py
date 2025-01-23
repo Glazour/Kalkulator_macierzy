@@ -138,6 +138,7 @@ for i in range(1, ilosc+1):
         nowa_macierz = odwrotna(wpisanie_macierzy())
     elif typ_macierzy == "obl":
         print(determinant(wpisanie_macierzy()))
+        exit()
     elif typ_macierzy == "t":
         typ_macierzy = "transponowaną"
         nowa_macierz = transpozycja(wpisanie_macierzy())
@@ -185,7 +186,7 @@ if (niew == 0 and rownanie == 1) or (niew == 1 and rownanie == 0) or (niew_index
     exit()
 if rownanie == 1 and niew == 1:
 ###########DLA INDEXU 0#############
-    if(niew_index == 0):
+    if niew_index == 0:
         new_niew_index = 0
         if niew_index == rown_index:
             nowe_rownanie.append(lista_macierzy[0])
@@ -374,10 +375,10 @@ if rownanie == 1 and niew == 1:
                 now = list()
                 for i in range(nowe_rownanie[0].wiersze):
                     nowa_macierz_mno.append([])
-                    for j in range(nowe_rownanie[2].kolumny):
-                        now.append([])
-                        now[j].append(float(nowe_rownanie[2].macierz[i][j]))
-                        nowa_macierz_mno[i].append(now[j])
+                    now = []
+                    for j in range(nowe_rownanie[1].kolumny):
+                        now.append(nowe_rownanie[0].macierz[i].tolist())
+                    nowa_macierz_mno[i].append(now)
                 nieznana = np.zeros((nowe_rownanie[1].kolumny, nowe_rownanie[1].kolumny))
                 for i in range(nowe_rownanie[1].kolumny):
                     nieznana[i] = np.linalg.solve(nowe_rownanie[0].macierz, nowe_rownanie[2].macierz[:, i])
@@ -395,32 +396,47 @@ if rownanie == 1 and niew == 1:
             else:
                 print("Podano zle wymiary macierzy")
     else:
-        if nowe_rownanie[0].operator == "*" and nowe_rownanie[0].kolumny == nowe_rownanie[2].kolumny and nowe_rownanie[
-            1].wiersze == nowe_rownanie[2].wiersze:
-            nowa_macierz_mno = []
-            now = list()
-            for i in range(nowe_rownanie[0].wiersze):
-                nowa_macierz_mno.append([])
-                for j in range(nowe_rownanie[2].kolumny):
-                    now.append([])
-                    now[j].append(float(nowe_rownanie[2].macierz[i][j]))
-                    nowa_macierz_mno[i].append(now[j])
-            if nowe_rownanie[1].operator == "*" and nowe_rownanie[1].kolumny == nowe_rownanie[2].kolumny and nowe_rownanie[2].wiersze == nowe_rownanie[3].wiersze:
-                for sub_tab in nowa_macierz_mno:
-                    temp_result = []
-                    for row in sub_tab:
-                        result_row = np.dot(row, nowe_rownanie[2].macierz)
-                        temp_result.append(result_row.tolist())
-                    nowa_macierz_mno = np.array(temp_result, dtype = float)
-                nieznana = np.zeros((nowe_rownanie[1].kolumny, nowe_rownanie[1].kolumny))
-                for i in range(nowe_rownanie[1].kolumny):
-                    nieznana[i] = np.linalg.solve(nowe_rownanie[0].macierz, nowe_rownanie[2].macierz[:, i])
-                print(nieznana)
-            else:
-                print("Podano zle wymiary macierzy")
-        else:
-            print("Podano zle wymiary macierzy")
+        print("nie umiemy tego rozwiązać")
+        # if nowe_rownanie[0].operator == "*" and nowe_rownanie[0].kolumny == nowe_rownanie[2].kolumny and nowe_rownanie[1].wiersze == nowe_rownanie[2].wiersze:
+        #     nowa_macierz_mno = []
+        #     now = list()
+        #     for i in range(nowe_rownanie[1].wiersze):
+        #         nowa_macierz_mno.append([])
+        #     for i in range(nowe_rownanie[0].wiersze):
+        #         now = []
+        #         for j in range(nowe_rownanie[1].kolumny):
+        #             now.append(nowe_rownanie[0].macierz[i].tolist())
+        #         nowa_macierz_mno[i].append(now)
+        #     if nowe_rownanie[1].operator == "*" and nowe_rownanie[1].kolumny == nowe_rownanie[2].kolumny and nowe_rownanie[2].wiersze == nowe_rownanie[3].wiersze:
+        #         jeszcze_nowsza_kurwa_macierz = []
+        #         nowa_macierz_mno = np.array(nowa_macierz_mno)
+        #         print(nowa_macierz_mno)
+        #         for matrix in nowa_macierz_mno:
+        #             rows = len(matrix[0])
+        #             cols = nowe_rownanie[2].kolumny
+        # 
+        #             new_matrix = [[0 for _ in range(cols)] for _ in range(rows)]
+        # 
+        #             for i in range(rows):
+        #                 for j in range(cols):
+        #                     new_matrix[i][j] = sum(
+        #                         matrix[0][i][k] * nowe_rownanie[2].macierz[k][j] for k in range(nowe_rownanie[2].wiersze)
+        #                     )
+        #             jeszcze_nowsza_kurwa_macierz.append(new_matrix)
+        #         jeszcze_nowsza_kurwa_macierz = np.array(jeszcze_nowsza_kurwa_macierz)
+        #         print(jeszcze_nowsza_kurwa_macierz)
+        #         print(nowe_rownanie[3].macierz)
+        #         nieznana = np.zeros((nowe_rownanie[1].kolumny, nowe_rownanie[1].kolumny))
+        #         for i in range(nowe_rownanie[1].kolumny):
+        #             nieznana[i] = np.linalg.solve(jeszcze_nowsza_kurwa_macierz, nowe_rownanie[3].macierz[i])
+        #         print(nieznana)
+        #     else:
+        #         print("Podano zle wymiary macierzy")
+        # else:
+        #     print("Podano zle wymiary macierzy")
 else:
+    for i in range(len(lista_macierzy) - 1):
+        lista_macierzy[i].operator = input("Podaj operator +, -, *, = między macierzą " + f"{lista_macierzy[i]}" + ", a macierzą " + f"{lista_macierzy[i + 1]}")
     nowa_macierz.macierz = lista_macierzy[0].macierz
     for i in range(len(lista_macierzy)-1):
         nowa_macierz.macierz = operacje(nowa_macierz.macierz, lista_macierzy, i)
