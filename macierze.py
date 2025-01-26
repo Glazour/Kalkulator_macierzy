@@ -56,17 +56,17 @@ def odbicia():
             [0, 0, 1]
         ], dtype = float)
     elif os == "x1":
-        prosta = input("podaj współrzędną x")
+        prosta = float(input("podaj współrzędną x"))
         return np.array([
-            [-1, 0, prosta],
+            [-1, 0, 2*prosta],
             [0, 1, 0],
             [0, 0, 1]
         ], dtype = float)
     elif os == "y1":
-        prosta = input("podaj współrzędną y")
+        prosta = float(input("podaj współrzędną y"))
         return np.array([
             [-1, 0, 0],
-            [0, 1, prosta],
+            [0, 1, 2*prosta],
             [0, 0, 1]
         ], dtype = float)
     else:
@@ -414,9 +414,9 @@ if rownanie == 1 and niew == 1:
         #         for matrix in nowa_macierz_mno:
         #             rows = len(matrix[0])
         #             cols = nowe_rownanie[2].kolumny
-        # 
+        #
         #             new_matrix = [[0 for _ in range(cols)] for _ in range(rows)]
-        # 
+        #
         #             for i in range(rows):
         #                 for j in range(cols):
         #                     new_matrix[i][j] = sum(
